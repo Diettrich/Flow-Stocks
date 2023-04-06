@@ -11,15 +11,6 @@ export function getBestTransactionFromStockPrices(
     return [stockPrices[0], stockPrices[0]];
   }
 
-  if (stockPrices.length === 2) {
-    if (
-      stockPrices[0].highestPriceOfTheDay > stockPrices[1].highestPriceOfTheDay
-    ) {
-      return [stockPrices[0], stockPrices[0]];
-    }
-    return [stockPrices[0], stockPrices[1]];
-  }
-
   let bestBuy: StockPrice = stockPrices[0];
   let bestSell: StockPrice = stockPrices[1];
   let bestProfit: number =
