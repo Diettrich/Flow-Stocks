@@ -1,6 +1,7 @@
 "use client";
 
 import { Ledger } from "@/types";
+import React from "react";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -18,10 +19,11 @@ function formatPrice(price: number): string {
 
 type Props = {
   ledger: Ledger[];
+  executionTime: number;
 };
-export default function Table({ ledger }: Props) {
+export default function Table({ ledger, executionTime }: Props) {
   return (
-    <div className="flex items-center h-full">
+    <div className="flex items-center justify-center flex-col h-full">
       <div className="h-1/2 overflow-y-auto m-20 rounded-lg drop-shadow-2xl border-2 border-stale-400">
         <table className="w-full table-fixed rounded-lg">
           <thead>
@@ -65,6 +67,10 @@ export default function Table({ ledger }: Props) {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="h-16 flex items-center">
+        temps total d&apos;execution: {(executionTime / 1000).toFixed(3)}{" "}
+        secondes
       </div>
     </div>
   );

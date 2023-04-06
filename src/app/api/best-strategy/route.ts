@@ -3,9 +3,12 @@ import { Ledger } from "@/types";
 
 export async function GET(request: Request) {
   try {
+    let start = performance.now();
     const ledger: Ledger[] = await getBestTradeStrategy();
+    let end = performance.now();
+    const executionTime = end - start;
 
-    return new Response(JSON.stringify(ledger), {
+    return new Response(JSON.stringify({ ledger, executionTime }), {
       headers: {
         "Content-Type": "application/json",
       },
