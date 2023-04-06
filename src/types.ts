@@ -41,3 +41,17 @@ export type ProfitData = {
   Anouar: PersonProfitData;
   Ayman: PersonProfitData;
 };
+
+export enum ACTION {
+  BUY = "buy",
+  SELL = "sell",
+}
+
+export type Ledger = {
+  date: string;
+  stock: string;
+  action: ACTION;
+  unitPrice: number;
+  stocksNumber: number;
+  portfolioValue: number;
+};

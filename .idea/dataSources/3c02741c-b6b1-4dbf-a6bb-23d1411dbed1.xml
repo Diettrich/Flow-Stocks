@@ -3,6 +3,8 @@
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.48">
     <root id="1">
       <DefaultCasing>exact</DefaultCasing>
+      <DefaultEngine>InnoDB</DefaultEngine>
+      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
       <ServerVersion>8.0.23</ServerVersion>
     </root>
     <schema id="2" parent="1" name="flow-test">
@@ -12,5 +14,75 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
+    <table id="7" parent="2" name="Stock">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <table id="8" parent="2" name="StockPrice">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <column id="9" parent="7" name="id">
+      <AutoIncrement>3</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="10" parent="7" name="name">
+      <DasType>varchar(191)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <index id="11" parent="7" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="12" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="13" parent="8" name="id">
+      <AutoIncrement>503</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="14" parent="8" name="stockId">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="15" parent="8" name="highestPriceOfTheDay">
+      <DasType>double|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="16" parent="8" name="lowestPriceOfTheDay">
+      <DasType>double|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="17" parent="8" name="timestamp">
+      <DasType>datetime(3)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <index id="18" parent="8" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="19" parent="8" name="stockId_timestamp">
+      <ColNames>stockId
+timestamp</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="20" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

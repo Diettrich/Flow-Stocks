@@ -5,7 +5,7 @@ const amazonStock = require("./stockData/amazon.json");
 
 const prisma = new PrismaClient();
 
-type StockPrice = {
+type SeedStockPrice = {
   highestPriceOfTheDay: number;
   lowestPriceOfTheDay: number;
   timestamp: number;
@@ -13,10 +13,10 @@ type StockPrice = {
 
 const seed = async () => {
   try {
-    await prisma.stock.deleteMany({});
     await prisma.stockPrice.deleteMany({});
+    await prisma.stock.deleteMany({});
 
-    const googleStockPrice = googleStock.map((stockPrice: StockPrice) => {
+    const googleStockPrice = googleStock.map((stockPrice: SeedStockPrice) => {
       return {
         highestPriceOfTheDay: stockPrice.highestPriceOfTheDay,
         lowestPriceOfTheDay: stockPrice.lowestPriceOfTheDay,
@@ -24,7 +24,7 @@ const seed = async () => {
       };
     });
 
-    const amazonStockPrice = amazonStock.map((stockPrice: StockPrice) => {
+    const amazonStockPrice = amazonStock.map((stockPrice: SeedStockPrice) => {
       return {
         highestPriceOfTheDay: stockPrice.highestPriceOfTheDay,
         lowestPriceOfTheDay: stockPrice.lowestPriceOfTheDay,
