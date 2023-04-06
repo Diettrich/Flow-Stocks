@@ -2,7 +2,7 @@ import React from "react";
 import Table from "@/components/Table";
 
 async function getTradeStrategyData() {
-  return await fetch("http://localhost:3000/api/best-strategy", {
+  return await fetch(`${process.env.API_URL}/api/best-strategy`, {
     cache: "no-store",
   }).then((response) => response.json());
 }

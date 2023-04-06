@@ -8,18 +8,19 @@ async function getStockData(): Promise<{
   averagePricePerMonth: ChartData[];
   profitData: ProfitData;
 }> {
+  console.log(process.env.API_URL);
   const [googleStock, amazonStock, profitData]: [
     AveragePricePerMonth[],
     AveragePricePerMonth[],
     ProfitData
   ] = await Promise.all([
-    fetch("http://localhost:3000/api/stocks?name=google", {
+    fetch(`${process.env.API_URL}/api/stocks?name=google`, {
       cache: "no-store",
     }).then((response) => response.json()),
-    fetch("http://localhost:3000/api/stocks?name=amazon", {
+    fetch(`${process.env.API_URL}/api/stocks?name=amazon`, {
       cache: "no-store",
     }).then((response) => response.json()),
-    fetch("http://localhost:3000/api/best-transaction", {
+    fetch(`${process.env.API_URL}/api/best-transaction`, {
       cache: "no-store",
     }).then((response) => response.json()),
   ]);
