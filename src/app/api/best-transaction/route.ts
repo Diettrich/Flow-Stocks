@@ -20,12 +20,12 @@ export async function GET(request: Request) {
     Anouar: {
       bestBuy: AnouarBestBuy,
       bestSell: AnouarBestSell,
-      profit: Math.round(AnouarProfit * 100) / 100,
+      profit: Math.round((AnouarProfit - 100000) * 100) / 100,
     },
     Ayman: {
       bestBuy: AymanBestBuy,
       bestSell: AymanBestSell,
-      profit: Math.round(AymanProfit * 100) / 100,
+      profit: Math.round((AymanProfit - 100000) * 100) / 100,
     },
   };
 
