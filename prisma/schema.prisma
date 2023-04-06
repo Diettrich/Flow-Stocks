@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Stock {
+  id          Int          @id @default(autoincrement())
+  name        String
+  stockPrices StockPrice[]
+}
+
+model StockPrice {
+  id                   Int      @id @default(autoincrement())
+  stockId              Int
+  stock                Stock    @relation(fields: [stockId], references: [id])
+  highestPriceOfTheDay Float
+  lowestPriceOfTheDay  Float
+  timestamp            DateTime
+
+  @@index([stockId, timestamp], name: "stockId_timestamp")
+}
