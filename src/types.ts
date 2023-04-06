@@ -1,3 +1,5 @@
+import { StockPrice } from "@/databaseClient";
+
 export type Month =
   | "January"
   | "February"
@@ -27,4 +29,15 @@ export type ChartData = {
   month: Month;
   google: number;
   amazon: number;
+};
+
+export type PersonProfitData = {
+  bestBuy: StockPrice;
+  bestSell: StockPrice;
+  profit: number;
+};
+
+export type ProfitData = {
+  Anouar: PersonProfitData;
+  Ayman: PersonProfitData;
 };

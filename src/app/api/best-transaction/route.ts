@@ -2,28 +2,34 @@ import {
   getAverageStockPricePerMonth,
   getBestTransaction,
 } from "@/services/stockPrice.service";
-import { AveragePricePerMonth } from "@/types";
+import { AveragePricePerMonth, ProfitData } from "@/types";
 export async function GET(request: Request) {
-  // const searchParams: URLSearchParams = new URL(request.url).searchParams;
-  // const nameParam: string | null = searchParams.get("name");
+  const capital: number = 100_000;
 
-  // if (!nameParam || !["amazon", "google"].includes(nameParam)) {
-  //     return new Response(JSON.stringify({ error: "Invalid name" }), {
-  //         headers: {
-  //             "Content-Type": "application/json",
-  //         },
-  //         status: 400,
-  //     });
-  // }
+  const [AnouarBestBuy, AnouarBestSell] = await getBestTransaction("google");
+  const [AymanBestBuy, AymanBestSell] = await getBestTransaction("amazon");
 
-  // const name = nameParam as "amazon" | "google";
-  //
-  // const averageStockPricePerMonth: AveragePricePerMonth[] =
-  //     await getAverageStockPricePerMonth(name);
+  const AnouarProfit: number =
+    (capital / AnouarBestBuy.lowestPriceOfTheDay) *
+    AnouarBestSell.highestPriceOfTheDay;
+  const AymanProfit: number =
+    (capital / AymanBestBuy.lowestPriceOfTheDay) *
+    AymanBestSell.highestPriceOfTheDay;
 
-  console.log(await getBestTransaction("google"));
+  const response: ProfitData = {
+    Anouar: {
+      bestBuy: AnouarBestBuy,
+      bestSell: AnouarBestSell,
+      profit: Math.round(AnouarProfit * 100) / 100,
+    },
+    Ayman: {
+      bestBuy: AymanBestBuy,
+      bestSell: AymanBestSell,
+      profit: Math.round(AymanProfit * 100) / 100,
+    },
+  };
 
-  return new Response('{"test": "test"}', {
+  return new Response(JSON.stringify(response), {
     headers: {
       "Content-Type": "application/json",
     },

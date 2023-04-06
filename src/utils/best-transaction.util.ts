@@ -12,6 +12,11 @@ export function getBestTransactionFromStockPrices(
   }
 
   if (stockPrices.length === 2) {
+    if (
+      stockPrices[0].highestPriceOfTheDay > stockPrices[1].highestPriceOfTheDay
+    ) {
+      return [stockPrices[0], stockPrices[0]];
+    }
     return [stockPrices[0], stockPrices[1]];
   }
 
