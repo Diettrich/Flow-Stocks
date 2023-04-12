@@ -1,18 +1,18 @@
-import { StockPrice } from "@/databaseClient";
+import { StockPrice } from '@/databaseClient';
 
 export type Month =
-  | "January"
-  | "February"
-  | "March"
-  | "April"
-  | "May"
-  | "June"
-  | "July"
-  | "August"
-  | "September"
-  | "October"
-  | "November"
-  | "December";
+  | 'January'
+  | 'February'
+  | 'March'
+  | 'April'
+  | 'May'
+  | 'June'
+  | 'July'
+  | 'August'
+  | 'September'
+  | 'October'
+  | 'November'
+  | 'December';
 
 export type AveragePricePerDay = {
   timestamp: Date;
@@ -43,8 +43,8 @@ export type ProfitData = {
 };
 
 export enum ACTION {
-  BUY = "buy",
-  SELL = "sell",
+  BUY = 'buy',
+  SELL = 'sell',
 }
 
 export type Ledger = {
@@ -55,3 +55,8 @@ export type Ledger = {
   stocksNumber: number;
   portfolioValue: number;
 };
+
+export enum STOCK_NAME {
+  GOOGLE = 'google',
+  AMAZON = 'amazon',
+}

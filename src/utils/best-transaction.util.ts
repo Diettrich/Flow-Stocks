@@ -1,10 +1,10 @@
-import { StockPrice } from "@/databaseClient";
+import { StockPrice } from '@/databaseClient';
 
 export function getBestTransactionFromStockPrices(
   stockPrices: StockPrice[]
 ): [StockPrice, StockPrice] {
   if (stockPrices.length < 1) {
-    throw new Error("Not enough stock prices to calculate a transaction");
+    throw new Error('Not enough stock prices to calculate a transaction');
   }
 
   if (stockPrices.length === 1) {

@@ -1,31 +1,26 @@
-import prismaClient, { StockPrice } from "@/databaseClient";
+import type { StockPrice } from '@/databaseClient';
 import {
-  getAveragePricePerDay,
-  getAveragePricePerMonth,
-} from "@/utils/stock.utils";
-import {
-  ACTION,
   AveragePricePerDay,
   AveragePricePerMonth,
   Ledger,
-} from "@/types";
-import { getBestTransactionFromStockPrices } from "@/utils/best-transaction.util";
+  STOCK_NAME,
+} from '@/types';
+import {
+  getAveragePricePerDay,
+  getAveragePricePerMonth,
+} from '@/utils/stock.utils';
+import { getBestTransactionFromStockPrices } from '@/utils/best-transaction.util';
 import {
   buyShares,
   growthOfTomorrow,
   sellShares,
-} from "@/utils/best-trade-strategy.utils";
+} from '@/utils/best-trade-strategy.utils';
+import { getStockPrices } from '@/repositories/stockPrices.repository';
 
 export async function getAverageStockPricePerMonth(
-  name: "google" | "amazon"
+  name: STOCK_NAME
 ): Promise<AveragePricePerMonth[]> {
-  const stockPrices: StockPrice[] = await prismaClient.stockPrice.findMany({
-    where: {
-      stock: {
-        name,
-      },
-    },
-  });
+  const stockPrices: StockPrice[] = await getStockPrices(name);
 
   const averagePricePerDay: AveragePricePerDay[] =
     getAveragePricePerDay(stockPrices);
@@ -34,48 +29,21 @@ export async function getAverageStockPricePerMonth(
 }
 
 export async function getBestTransaction(
-  name: "google" | "amazon"
+  name: STOCK_NAME
 ): Promise<[StockPrice, StockPrice]> {
-  const stockPrices: StockPrice[] = await prismaClient.stockPrice.findMany({
-    where: {
-      stock: {
-        name,
-      },
-    },
-    orderBy: {
-      timestamp: "asc",
-    },
-  });
+  const stockPrices: StockPrice[] = await getStockPrices(name);
 
   return getBestTransactionFromStockPrices(stockPrices);
 }
 
 export async function getBestTradeStrategy(): Promise<Ledger[]> {
   const [amazonStockPrices, googleStockPrices] = await Promise.all([
-    prismaClient.stockPrice.findMany({
-      where: {
-        stock: {
-          name: "amazon",
-        },
-      },
-      orderBy: {
-        timestamp: "asc",
-      },
-    }),
-    prismaClient.stockPrice.findMany({
-      where: {
-        stock: {
-          name: "google",
-        },
-      },
-      orderBy: {
-        timestamp: "asc",
-      },
-    }),
+    getStockPrices(STOCK_NAME.AMAZON),
+    getStockPrices(STOCK_NAME.GOOGLE),
   ]);
 
   if (amazonStockPrices.length !== googleStockPrices.length) {
-    throw new Error("Stock prices are not the same length");
+    throw new Error('Stock prices are not the same length');
   }
 
   const length = amazonStockPrices.length;
@@ -88,26 +56,26 @@ export async function getBestTradeStrategy(): Promise<Ledger[]> {
     const googleGrowth = growthOfTomorrow(googleStockPrices, i);
     const amazonGrowth = growthOfTomorrow(amazonStockPrices, i);
     if (hasStock) {
-      if (currentStock === "google" && googleGrowth < 0) {
+      if (currentStock === 'google' && googleGrowth < 0) {
         sellShares(currentStock, googleStockPrices, ledger, i, capital);
         currentStock = null;
         hasStock = false;
 
         if (amazonGrowth > 0) {
-          currentStock = "amazon";
+          currentStock = 'amazon';
           buyShares(currentStock, amazonStockPrices, ledger, i, capital);
           hasStock = true;
           capital += capital * amazonGrowth;
         }
       }
 
-      if (currentStock === "amazon" && amazonGrowth < 0) {
+      if (currentStock === 'amazon' && amazonGrowth < 0) {
         sellShares(currentStock, amazonStockPrices, ledger, i, capital);
         currentStock = null;
         hasStock = false;
 
         if (googleGrowth > 0) {
-          currentStock = "google";
+          currentStock = 'google';
           buyShares(currentStock, googleStockPrices, ledger, i, capital);
           hasStock = true;
           capital += capital * googleGrowth;
@@ -115,33 +83,33 @@ export async function getBestTradeStrategy(): Promise<Ledger[]> {
       }
 
       if (
-        currentStock === "google" &&
+        currentStock === 'google' &&
         googleGrowth > 0 &&
         amazonGrowth > googleGrowth
       ) {
         sellShares(currentStock, googleStockPrices, ledger, i, capital);
-        currentStock = "amazon";
+        currentStock = 'amazon';
         buyShares(currentStock, amazonStockPrices, ledger, i, capital);
         capital += capital * amazonGrowth;
       }
 
       if (
-        currentStock === "amazon" &&
+        currentStock === 'amazon' &&
         amazonGrowth > 0 &&
         googleGrowth > amazonGrowth
       ) {
         sellShares(currentStock, amazonStockPrices, ledger, i, capital);
-        currentStock = "google";
+        currentStock = 'google';
         buyShares(currentStock, googleStockPrices, ledger, i, capital);
         capital += capital * googleGrowth;
       }
     } else {
       if (amazonGrowth < googleGrowth) {
-        currentStock = "google";
+        currentStock = 'google';
         buyShares(currentStock, amazonStockPrices, ledger, i, capital);
         capital += capital * googleGrowth;
       } else {
-        currentStock = "amazon";
+        currentStock = 'amazon';
         buyShares(currentStock, googleStockPrices, ledger, i, capital);
         capital += capital * amazonGrowth;
       }

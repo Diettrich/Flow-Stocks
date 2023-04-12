@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -9,8 +9,8 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import { ChartData } from "@/types";
+} from 'recharts';
+import { ChartData } from '@/types';
 
 type Props = {
   averagePricePerMonth: ChartData[];

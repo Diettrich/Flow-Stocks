@@ -1,10 +1,10 @@
-import React from "react";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Container from "@/components/Container";
+import React from 'react';
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import Container from '@/components/Container';
 
 export const metadata = {
-  title: "Flow Stocks",
+  title: 'Flow Stocks',
 };
 
 export default function RootLayout({
@@ -18,12 +18,12 @@ export default function RootLayout({
         <Navbar
           links={[
             {
-              label: "Acceuille",
-              href: "/",
+              label: 'Acceuille',
+              href: '/',
             },
             {
-              label: "Erwan Trading Strategy",
-              href: "/erwan-strategy",
+              label: 'Erwan Trading Strategy',
+              href: '/erwan-strategy',
             },
           ]}
         />

@@ -2,27 +2,27 @@ import {
   sellShares,
   buyShares,
   growthOfTomorrow,
-} from "./best-trade-strategy.utils";
-import { Ledger } from "@/types";
+} from './best-trade-strategy.utils';
+import { Ledger } from '@/types';
 
-describe("sellShares", () => {
-  it("should add a sell transaction to the ledger", () => {
-    const currentStock = "google";
+describe('sellShares', () => {
+  it('should add a sell transaction to the ledger', () => {
+    const currentStock = 'google';
     const stockPrices = [
       {
         highestPriceOfTheDay: 200,
         lowestPriceOfTheDay: 180,
-        timestamp: new Date("2022-01-01"),
+        timestamp: new Date('2022-01-01'),
       },
       {
         highestPriceOfTheDay: 210,
         lowestPriceOfTheDay: 190,
-        timestamp: new Date("2022-01-02"),
+        timestamp: new Date('2022-01-02'),
       },
       {
         highestPriceOfTheDay: 220,
         lowestPriceOfTheDay: 200,
-        timestamp: new Date("2022-01-03"),
+        timestamp: new Date('2022-01-03'),
       },
     ];
     const ledger: Ledger[] = [];
@@ -35,7 +35,7 @@ describe("sellShares", () => {
     expect(ledger[0]).toMatchObject({
       date: stockPrices[index].timestamp.toDateString(),
       stock: currentStock,
-      action: "sell",
+      action: 'sell',
       unitPrice: stockPrices[index].highestPriceOfTheDay,
       stocksNumber:
         Math.floor((capital / stockPrices[index].highestPriceOfTheDay) * 100) /
@@ -45,24 +45,24 @@ describe("sellShares", () => {
   });
 });
 
-describe("buyShares", () => {
-  it("should add a buy transaction to the ledger", () => {
-    const stock = "AAPL";
+describe('buyShares', () => {
+  it('should add a buy transaction to the ledger', () => {
+    const stock = 'AAPL';
     const stockPrices = [
       {
         highestPriceOfTheDay: 200,
         lowestPriceOfTheDay: 180,
-        timestamp: new Date("2022-01-01"),
+        timestamp: new Date('2022-01-01'),
       },
       {
         highestPriceOfTheDay: 210,
         lowestPriceOfTheDay: 190,
-        timestamp: new Date("2022-01-02"),
+        timestamp: new Date('2022-01-02'),
       },
       {
         highestPriceOfTheDay: 220,
         lowestPriceOfTheDay: 200,
-        timestamp: new Date("2022-01-03"),
+        timestamp: new Date('2022-01-03'),
       },
     ];
     const ledger: Ledger[] = [];
@@ -75,7 +75,7 @@ describe("buyShares", () => {
     expect(ledger[0]).toMatchObject({
       date: stockPrices[index].timestamp.toDateString(),
       stock,
-      action: "buy",
+      action: 'buy',
       unitPrice: stockPrices[index].lowestPriceOfTheDay,
       stocksNumber:
         Math.floor((capital / stockPrices[index].lowestPriceOfTheDay) * 100) /
@@ -85,23 +85,23 @@ describe("buyShares", () => {
   });
 });
 
-describe("growthOfTomorrow", () => {
-  it("should return the growth of tomorrow", () => {
+describe('growthOfTomorrow', () => {
+  it('should return the growth of tomorrow', () => {
     const stockPrices = [
       {
         highestPriceOfTheDay: 200,
         lowestPriceOfTheDay: 180,
-        timestamp: new Date("2022-01-01"),
+        timestamp: new Date('2022-01-01'),
       },
       {
         highestPriceOfTheDay: 210,
         lowestPriceOfTheDay: 100,
-        timestamp: new Date("2022-01-02"),
+        timestamp: new Date('2022-01-02'),
       },
       {
         highestPriceOfTheDay: 200,
         lowestPriceOfTheDay: 100,
-        timestamp: new Date("2022-01-03"),
+        timestamp: new Date('2022-01-03'),
       },
     ];
     const index = 1;

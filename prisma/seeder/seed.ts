@@ -1,7 +1,7 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from '@prisma/client';
 
-const googleStock = require("./stockData/google.json");
-const amazonStock = require("./stockData/amazon.json");
+import googleStock from './stockData/google.json';
+import amazonStock from './stockData/amazon.json';
 
 const prisma = new PrismaClient();
 
@@ -34,7 +34,7 @@ const seed = async () => {
 
     await prisma.stock.create({
       data: {
-        name: "Google",
+        name: 'Google',
         stockPrices: {
           create: googleStockPrice,
         },
@@ -42,14 +42,14 @@ const seed = async () => {
     });
     await prisma.stock.create({
       data: {
-        name: "Amazon",
+        name: 'Amazon',
         stockPrices: {
           create: amazonStockPrice,
         },
       },
     });
 
-    console.log("Database seeded!");
+    console.log('Database seeded!');
   } catch (error) {
     console.error(error);
     process.exit(1);

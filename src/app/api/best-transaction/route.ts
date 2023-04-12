@@ -1,13 +1,15 @@
-import {
-  getAverageStockPricePerMonth,
-  getBestTransaction,
-} from "@/services/stockPrice.service";
-import { AveragePricePerMonth, ProfitData } from "@/types";
-export async function GET(request: Request) {
-  const capital: number = 100_000;
+import { getBestTransaction } from '@/services/stockPrice.service';
+import { ProfitData, STOCK_NAME } from '@/types';
 
-  const [AnouarBestBuy, AnouarBestSell] = await getBestTransaction("google");
-  const [AymanBestBuy, AymanBestSell] = await getBestTransaction("amazon");
+export async function GET() {
+  const capital = 100_000;
+
+  const [AnouarBestBuy, AnouarBestSell] = await getBestTransaction(
+    STOCK_NAME.GOOGLE
+  );
+  const [AymanBestBuy, AymanBestSell] = await getBestTransaction(
+    STOCK_NAME.AMAZON
+  );
 
   const AnouarProfit: number =
     (capital / AnouarBestBuy.lowestPriceOfTheDay) *
@@ -31,7 +33,7 @@ export async function GET(request: Request) {
 
   return new Response(JSON.stringify(response), {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 }

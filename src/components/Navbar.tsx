@@ -1,6 +1,6 @@
-import Link from "next/link";
-import type { FunctionComponent } from "react";
-import Container from "./Container";
+import Link from 'next/link';
+import type { FunctionComponent } from 'react';
+import Container from './Container';
 
 interface Link {
   label: string;

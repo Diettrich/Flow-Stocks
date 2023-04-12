@@ -1,4 +1,4 @@
-import { AveragePricePerMonth, ChartData } from "@/types";
+import { AveragePricePerMonth, ChartData } from '@/types';
 
 export function transformToChartFormat(
   googleStock: AveragePricePerMonth[],
@@ -13,7 +13,7 @@ export function transformToChartFormat(
     );
 
     if (!googleStockMonth || !amazonStockMonth) {
-      throw new Error("Invalid data");
+      throw new Error('Invalid data');
     }
 
     return {

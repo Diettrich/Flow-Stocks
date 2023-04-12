@@ -1,5 +1,5 @@
-import { StockPrice } from "@/databaseClient";
-import { ACTION, Ledger } from "../types";
+import { StockPrice } from '@/databaseClient';
+import { ACTION, Ledger } from '../types';
 
 export function sellShares(
   currentStock: string,
