@@ -161,13 +161,13 @@ export function getLedger({
           currentStocksNumber
         );
         currentStock = STOCK_NAME.AMAZON;
-        hasShares = true;
         currentStocksNumber = 0;
 
         ledger = buyShares(currentStock, amazonStockPrices, ledger, i, capital);
         currentStocksNumber = Math.floor(
           capital / amazonStockPrices[i].lowestPriceOfTheDay
         );
+        hasShares = true;
         capital = amazonNextCapital;
       }
 
@@ -185,7 +185,6 @@ export function getLedger({
           currentStocksNumber
         );
         currentStock = STOCK_NAME.GOOGLE;
-        hasShares = true;
         currentStocksNumber = 0;
 
         ledger = buyShares(currentStock, googleStockPrices, ledger, i, capital);
@@ -193,10 +192,51 @@ export function getLedger({
           capital / googleStockPrices[i].lowestPriceOfTheDay
         );
         capital = googleNextCapital;
+        hasShares = true;
       } else {
         if (currentStock === STOCK_NAME.GOOGLE) {
+          ledger = sellShares(
+            currentStock,
+            googleStockPrices,
+            ledger,
+            i,
+            capital,
+            currentStocksNumber
+          );
+          currentStocksNumber = 0;
+
+          ledger = buyShares(
+            currentStock,
+            googleStockPrices,
+            ledger,
+            i,
+            capital
+          );
+          currentStocksNumber = Math.floor(
+            capital / googleStockPrices[i].lowestPriceOfTheDay
+          );
           capital = googleNextCapital;
-        } else {
+        } else if (currentStock === STOCK_NAME.AMAZON) {
+          ledger = sellShares(
+            currentStock,
+            amazonStockPrices,
+            ledger,
+            i,
+            capital,
+            currentStocksNumber
+          );
+          currentStocksNumber = 0;
+
+          ledger = buyShares(
+            currentStock,
+            amazonStockPrices,
+            ledger,
+            i,
+            capital
+          );
+          currentStocksNumber = Math.floor(
+            capital / amazonStockPrices[i].lowestPriceOfTheDay
+          );
           capital = amazonNextCapital;
         }
       }

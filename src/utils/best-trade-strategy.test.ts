@@ -161,12 +161,28 @@ describe('getLedger', () => {
         portfolioValue: 100000,
       },
       {
-        date: 'Mon Jan 03 2022',
-        stock: 'amazon',
         action: 'sell',
-        unitPrice: 250,
-        stocksNumber: 1250,
+        date: 'Sun Jan 02 2022',
         portfolioValue: 275000,
+        stock: 'amazon',
+        stocksNumber: 1250,
+        unitPrice: 220,
+      },
+      {
+        action: 'buy',
+        date: 'Sun Jan 02 2022',
+        portfolioValue: 275000,
+        stock: 'amazon',
+        stocksNumber: 2291,
+        unitPrice: 120,
+      },
+      {
+        action: 'sell',
+        date: 'Mon Jan 03 2022',
+        portfolioValue: 572750,
+        stock: 'amazon',
+        stocksNumber: 2291,
+        unitPrice: 250,
       },
     ]);
   });
