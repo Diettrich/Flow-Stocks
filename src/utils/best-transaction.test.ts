@@ -8,14 +8,14 @@ import { BestTransaction } from '@/types';
 describe('getBestTransactionFromStockPrices', () => {
   const stockPrices: StockPrice[] = [
     {
-      highestPriceOfTheDay: 60,
-      lowestPriceOfTheDay: 20,
-      timestamp: new Date('2022-01-02'),
-    },
-    {
       highestPriceOfTheDay: 50,
       lowestPriceOfTheDay: 10,
       timestamp: new Date('2022-01-01'),
+    },
+    {
+      highestPriceOfTheDay: 60,
+      lowestPriceOfTheDay: 20,
+      timestamp: new Date('2022-01-02'),
     },
     {
       highestPriceOfTheDay: 30,
