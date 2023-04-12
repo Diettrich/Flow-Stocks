@@ -42,6 +42,11 @@ export type ProfitData = {
   Ayman: PersonProfitData;
 };
 
+export type BestTransaction = {
+  bestBuy: StockPrice;
+  bestSell: StockPrice;
+};
+
 export enum ACTION {
   BUY = 'buy',
   SELL = 'sell',

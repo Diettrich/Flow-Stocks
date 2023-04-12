@@ -1,5 +1,9 @@
 import { StockPrice } from '@/databaseClient';
-import { getBestTransactionFromStockPrices } from './best-transaction.util';
+import {
+  getBestTransactionFromStockPrices,
+  getPersonProfitData,
+} from './best-transaction.util';
+import { BestTransaction } from '@/types';
 
 describe('getBestTransactionFromStockPrices', () => {
   const stockPrices: StockPrice[] = [
@@ -30,7 +34,7 @@ describe('getBestTransactionFromStockPrices', () => {
     },
   ];
   it('should return the best buy and sell stock prices based on the highest profit', () => {
-    const [bestBuy, bestSell]: [StockPrice, StockPrice] =
+    const { bestBuy, bestSell }: BestTransaction =
       getBestTransactionFromStockPrices(stockPrices);
 
     expect(bestBuy).toEqual(stockPrices[2]);
@@ -44,16 +48,35 @@ describe('getBestTransactionFromStockPrices', () => {
   });
 
   it('returns a transaction with a single stock price', () => {
-    const [bestBuy, bestSell]: [StockPrice, StockPrice] =
+    const { bestBuy, bestSell }: BestTransaction =
       getBestTransactionFromStockPrices([stockPrices[0]]);
     expect(bestBuy).toEqual(stockPrices[0]);
     expect(bestSell).toEqual(stockPrices[0]);
   });
 
   it('returns the correct transaction when there are only two stock prices', () => {
-    const [bestBuy, bestSell]: [StockPrice, StockPrice] =
+    const { bestBuy, bestSell }: BestTransaction =
       getBestTransactionFromStockPrices([stockPrices[0], stockPrices[1]]);
     expect(bestBuy).toEqual(stockPrices[0]);
     expect(bestSell).toEqual(stockPrices[1]);
+  });
+});
+
+describe('getPersonProfitData', () => {
+  it('calculates profit correctly', () => {
+    const bestTransaction = {
+      bestBuy: {
+        lowestPriceOfTheDay: 100,
+      },
+      bestSell: {
+        highestPriceOfTheDay: 120,
+      },
+    } as BestTransaction;
+    const capital = 1000;
+    const expectedProfit = 200;
+
+    const result = getPersonProfitData(bestTransaction, capital);
+
+    expect(result.profit).toEqual(expectedProfit);
   });
 });

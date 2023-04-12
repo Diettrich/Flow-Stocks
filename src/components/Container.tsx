@@ -1,15 +1,12 @@
 import classNames from 'classnames';
-import type { FunctionComponent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export interface ContainerProps {
   className?: string;
   children: ReactNode;
 }
 
-const Container: FunctionComponent<ContainerProps> = ({
-  children,
-  className,
-}) => (
+const Container = ({ children, className }: ContainerProps) => (
   <div className={classNames('container mx-auto', className)}>{children}</div>
 );
 

@@ -2,20 +2,26 @@ import type { StockPrice } from '@/databaseClient';
 import {
   AveragePricePerDay,
   AveragePricePerMonth,
+  BestTransaction,
   Ledger,
+  ProfitData,
   STOCK_NAME,
 } from '@/types';
 import {
   getAveragePricePerDay,
   getAveragePricePerMonth,
 } from '@/utils/stock.utils';
-import { getBestTransactionFromStockPrices } from '@/utils/best-transaction.util';
+import {
+  getBestTransactionFromStockPrices,
+  getPersonProfitData,
+} from '@/utils/best-transaction.util';
 import {
   buyShares,
   growthOfTomorrow,
   sellShares,
 } from '@/utils/best-trade-strategy.utils';
 import { getStockPrices } from '@/repositories/stockPrices.repository';
+import { CAPITAL } from '@/constants';
 
 export async function getAverageStockPricePerMonth(
   name: STOCK_NAME
@@ -28,12 +34,21 @@ export async function getAverageStockPricePerMonth(
   return getAveragePricePerMonth(averagePricePerDay);
 }
 
-export async function getBestTransaction(
-  name: STOCK_NAME
-): Promise<[StockPrice, StockPrice]> {
-  const stockPrices: StockPrice[] = await getStockPrices(name);
+export async function getBestTransaction(): Promise<ProfitData> {
+  const [googleStockPrices, amazonStockPrices] = await Promise.all([
+    getStockPrices(STOCK_NAME.GOOGLE),
+    getStockPrices(STOCK_NAME.AMAZON),
+  ]);
 
-  return getBestTransactionFromStockPrices(stockPrices);
+  const AnouarBestTransaction: BestTransaction =
+    getBestTransactionFromStockPrices(googleStockPrices);
+  const AymanBestTransaction: BestTransaction =
+    getBestTransactionFromStockPrices(amazonStockPrices);
+
+  return {
+    Anouar: getPersonProfitData(AnouarBestTransaction, CAPITAL),
+    Ayman: getPersonProfitData(AymanBestTransaction, CAPITAL),
+  };
 }
 
 export async function getBestTradeStrategy(): Promise<Ledger[]> {
@@ -49,7 +64,7 @@ export async function getBestTradeStrategy(): Promise<Ledger[]> {
   const length = amazonStockPrices.length;
   const ledger: Ledger[] = [];
   let hasStock = false;
-  let capital = 100000;
+  let capital = CAPITAL;
   let currentStock = null;
 
   for (let i = 0; i < length - 1; i++) {

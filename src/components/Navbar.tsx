@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { FunctionComponent } from 'react';
 import Container from './Container';
 
 interface Link {
@@ -11,7 +10,7 @@ interface Props {
   links: Link[];
 }
 
-const Navbar: FunctionComponent<Props> = ({ links }) => {
+const Navbar = ({ links }: Props) => {
   return (
     <div className="w-full border-slate-400 border-b-[0.5px] bg-black text-slate-200">
       <Container className="flex flex-col sm:flex-row py-4 justify-center sm:justify-start items-center">
